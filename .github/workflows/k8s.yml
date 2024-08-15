@@ -38,7 +38,7 @@ jobs:
 
       - name: Run Deployment files
         run: |
-          kubectl apply -f deploy/.
+          kubectl apply -f ./deploy/.
 
       - name: update & Install Helm charts
         run: |
