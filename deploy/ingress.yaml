@@ -48,9 +48,9 @@ spec:
             port:
               number: 9090
 
-tls:
-  - hosts:
-      - prometheus.nuel-dev.me
-      - sock.nuel-dev.me
-      - grafana.nuel-dev.me
-    secretName: tls-secret
+# tls:
+#   - hosts:
+#       - prometheus.nuel-dev.me
+#       - sock.nuel-dev.me
+#       - grafana.nuel-dev.me
+#     secretName: tls-secret
