@@ -26,3 +26,36 @@ To get started with this project, you'll need to have the following tools instal
 
 4. **Install Helm**:  
    Helm simplifies managing Kubernetes applications. Install Helm by following the [Helm installation guide](https://helm.sh/docs/intro/install/).
+
+### 3. Infrastructure Setup
+
+To provision the EKS cluster on AWS using Terraform, follow these steps:
+
+- **Environment Setup**:  
+  Begin by setting your AWS credentials (Access Key ID and Secret Access Key) as environment variables in your terminal. This allows Terraform to authenticate and interact with your AWS account.
+
+  - Add your AWS Access Key ID
+
+  - `export AWS_ACCESS_KEY_ID=your_access_key_id`
+
+  - Add your AWS Secret Access Key
+
+  - `export AWS_SECRET_ACCESS_KEY=your_secret_access_key`
+
+
+- **Writing Terraform Files**:  
+  Create the necessary Terraform files to define and manage my infrastructure:
+  
+  - `main.tf`: Contains all the essential resources to set up the EKS cluster, including VPC, EKS itself, node groups, and any other required components.
+  
+  - `backend.tf`: Used to configure the backend for Terraform state management. In this case, the state file will be stored in an S3 bucket to enable collaboration and track changes.
+
+- **Provisioning Resources**:  
+  Once the Terraform files are ready, run the following commands:
+  
+  - `terraform init`: Initializes the Terraform configuration, downloading necessary providers and setting up the backend.
+  
+  - `terraform plan`: Creates an execution plan, allowing me to review the changes that will be made to the infrastructure.
+  
+  - `terraform apply --auto-approve`: Applies the changes and provisions the EKS cluster and associated resources automatically without requiring further confirmation.
+
