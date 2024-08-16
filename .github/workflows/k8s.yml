@@ -44,9 +44,9 @@ jobs:
         run: |
           kubectl apply -f ./deploy/.
 
-      - name: update & Install Helm charts
+      - name: Add Helm Charts
         run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add jetstack https://charts.jetstack.io --force-update
           helm repo update
-          helm upgrade --install ingress ingress-nginx/ingress-nginx
-          helm upgrade --install prometheus https://prometheus-community.github.io/helm-charts
-          helm upgrade --install certificate https://charts.jetstack.io --force-update
