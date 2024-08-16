@@ -52,18 +52,18 @@ To provision the EKS cluster on AWS using Terraform, follow these steps:
 - **Provisioning Resources**:  
   Once the Terraform files are ready, run the following commands:
 
-  ````bash
-  terraform init
+  ```bash
+  terraform init```
 
   Initializes the Terraform configuration, downloading necessary providers and setting up the backend.
 
-  ````bash
-  terraform plan 
+  ```bash
+  terraform plan```
   
   Creates an execution plan, allowing me to review the changes that will be made to the infrastructure.
 
-  ````bash
-  terraform apply --auto-approve 
+  ```bash
+  terraform apply --auto-approve```
   
   Applies the changes and provisions the EKS cluster and associated resources automatically without requiring further confirmation.
 
@@ -74,14 +74,14 @@ After provisioning the EKS cluster, the next step is to set up the Kubernetes en
 - **Creating and Configuring the `sock-shop` Namespace**:  
   First, create the `sock-shop` namespace where all the microservices will be deployed. Use the following command:
 
-  ````bash
-  kubectl create namespace sock-shop
+  ```bash
+  kubectl create namespace sock-shop```
 
   Next, update your kubeconfig to connect to the EKS cluster (also named sock-shop) and set the current context to the newly created namespace:
 
-  ````bash
+  ```bash
   aws eks update-kubeconfig --region <your-region> --name <cluster-name>
-  kubectl config set-context --current --namespace=<your-namespace>
+  kubectl config set-context --current --namespace=<your-namespace>```
 
 - **Deployment Files**:
   In a project like this, where the deployment configuration file can be very lengthy, it's best to split it into separate files for each service being provisioned. This approach makes it easier to debug issues and identify any faulty pods.
@@ -95,5 +95,5 @@ After provisioning the EKS cluster, the next step is to set up the Kubernetes en
 - **Deploy Kubernetes resources**:
     After the cluster has been provisioned, deploy the services cnfiguration files:
 
-    ````bash
-    kubectl apply -f ./deploy/.
+    ```bash
+    kubectl apply -f ./deploy/.```
