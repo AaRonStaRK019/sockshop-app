@@ -36,6 +36,10 @@ jobs:
           aws eks --region us-east-1 update-kubeconfig --name sock-shop
           kubectl config set-context --current --namespace=sock-shop
 
+      - name: Install Cert-Manager CRDs
+        run: kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
+            
+
       - name: Run Deployment files
         run: |
           kubectl apply -f ./deploy/.
