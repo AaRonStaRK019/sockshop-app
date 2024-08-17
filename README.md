@@ -36,11 +36,15 @@ To provision the EKS cluster on AWS using Terraform, follow these steps:
 
   - Add your AWS Access Key ID
 
-  - `export AWS_ACCESS_KEY_ID=your_access_key_id`
+  ```bash
+  export AWS_ACCESS_KEY_ID=your_access_key_id`
+  ```
 
   - Add your AWS Secret Access Key
 
-  - `export AWS_SECRET_ACCESS_KEY=your_secret_access_key`
+  ```bash
+  export AWS_SECRET_ACCESS_KEY=your_secret_access_key`
+  ```
 
 - **Writing Terraform Files**:  
   Create the necessary Terraform files to define and manage my infrastructure:
@@ -53,17 +57,20 @@ To provision the EKS cluster on AWS using Terraform, follow these steps:
   Once the Terraform files are ready, run the following commands:
 
   ```bash
-  terraform init```
+  terraform init
+  ```
 
   Initializes the Terraform configuration, downloading necessary providers and setting up the backend.
 
   ```bash
-  terraform plan```
+  terraform plan
+  ```
   
-  Creates an execution plan, allowing me to review the changes that will be made to the infrastructure.
+  Creates an execution plan, allowing you to review the changes that will be made to the infrastructure.
 
   ```bash
-  terraform apply --auto-approve```
+  terraform apply --auto-approve
+  ```
   
   Applies the changes and provisions the EKS cluster and associated resources automatically without requiring further confirmation.
 
@@ -75,13 +82,15 @@ After provisioning the EKS cluster, the next step is to set up the Kubernetes en
   First, create the `sock-shop` namespace where all the microservices will be deployed. Use the following command:
 
   ```bash
-  kubectl create namespace sock-shop```
+  kubectl create namespace sock-shop
+  ```
 
   Next, update your kubeconfig to connect to the EKS cluster (also named sock-shop) and set the current context to the newly created namespace:
 
   ```bash
   aws eks update-kubeconfig --region <your-region> --name <cluster-name>
-  kubectl config set-context --current --namespace=<your-namespace>```
+  kubectl config set-context --current --namespace=<your-namespace>
+  ```
 
 - **Deployment Files**:
   In a project like this, where the deployment configuration file can be very lengthy, it's best to split it into separate files for each service being provisioned. This approach makes it easier to debug issues and identify any faulty pods.
@@ -96,4 +105,5 @@ After provisioning the EKS cluster, the next step is to set up the Kubernetes en
     After the cluster has been provisioned, deploy the services cnfiguration files:
 
     ```bash
-    kubectl apply -f ./deploy/.```
+    kubectl apply -f ./deploy/.
+    ```
