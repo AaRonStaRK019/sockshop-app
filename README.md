@@ -1,6 +1,5 @@
 # Deploying and Managing Microservices on AWS EKS with Kubernetes: A Comprehensive Guide
 
-
 ## Project Overview
 
 The goal of this project is to deploy and manage a microservices-based application using Kubernetes, leveraging AWS as the cloud provider. This project demonstrates how to provision an Elastic Kubernetes Service (EKS) cluster, deploy application components as pods within a dedicated namespace (`sock-shop`), expose the frontend to the internet using Kubernetes Ingress, and set up a robust monitoring solution with Grafana, Prometheus, and Alertmanager. Additionally, the project aims to secure the application using a Let's Encrypt SSL certificate, ensuring that all communications are encrypted. The overarching objective is to showcase a scalable, production-ready infrastructure capable of hosting microservices in a cloud environment.
@@ -203,9 +202,9 @@ To set up monitoring for your Kubernetes cluster and the deployed application, f
 
   Get the services names and port numbers for prometheus services installed
 
-  ![](./img/prom-services.png)
-
   ![kube-prom-stack installed](./img/prometheus-stack-installed.png)
+  
+  ![prom-services](./img/prom-services.png)
 
 - Update ingress.yaml to include hosts and port numbers for the prometheus and grafana services.
 
@@ -270,6 +269,45 @@ To set up monitoring for your Kubernetes cluster and the deployed application, f
   Another example using a custom ID:
 
   ![grafana-id-dashboard](./img/grafana-kube-cluster-dashboard.png)
+
+### 5. CI/CD Setup with GitHub Actions
+
+To automate the deployment process for this project, two GitHub Actions workflows were created:
+
+#### 1. Terraform Workflow
+
+This workflow (`terraform.yml`) is responsible for provisioning the necessary AWS resources, including the EKS cluster and other infrastructure components, using Terraform.
+
+**Workflow Trigger**: 
+- The workflow runs on every push to the `terraform` branch or when manually triggered via the `workflow_dispatch` event.
+
+**Key Steps**:
+- **Checkout Code**: Pulls the latest code from the repository.
+- **Set up Terraform**: Installs Terraform to manage infrastructure as code.
+- **Set up kubectl & Helm**: Installs kubectl and Helm for Kubernetes cluster management.
+- **Configure AWS Credentials**: Sets up AWS credentials using GitHub Secrets for secure access to AWS.
+- **Create S3 Bucket**: Creates an S3 bucket to store the Terraform state file.
+- **Create EKS Cluster**: Initializes and applies the Terraform configuration to provision the EKS cluster and other resources.
+- **Update kubeconfig**: Updates the Kubernetes configuration to interact with the new EKS cluster.
+- **Add Helm Repositories**: Adds necessary Helm repositories for NGINX Ingress, Prometheus, and Cert-Manager.
+
+#### 2. Kubernetes Workflow
+
+This workflow (`k8s.yml`) deploys the Kubernetes resources, such as pods, services, and Helm charts, to the EKS cluster.
+
+**Workflow Trigger**: 
+- The workflow runs on every push to the `main` branch or when manually triggered via the `workflow_dispatch` event.
+
+**Key Steps**:
+- **Checkout Code**: Pulls the latest code from the repository.
+- **Configure AWS Credentials**: Sets up AWS credentials using GitHub Secrets for secure access to AWS.
+- **Set up kubectl & Helm**: Installs kubectl and Helm for Kubernetes cluster management.
+- **Update kubeconfig**: Updates the Kubernetes configuration to interact with the `sock-shop` namespace in the EKS cluster.
+- **Add Helm Repositories**: Adds necessary Helm repositories for NGINX Ingress, Prometheus, and Cert-Manager.
+- **Install Helm Charts**: Installs or upgrades Helm charts for NGINX Ingress and the Prometheus monitoring stack.
+- **Run Deployment Files**: Applies the Kubernetes YAML files in the `deploy/` directory to deploy the application and services.
+
+These workflows ensure a streamlined and automated deployment process, allowing for efficient infrastructure provisioning and application deployment directly from GitHub. This setup not only speeds up the deployment process but also enforces consistency and repeatability in the environment, reducing the likelihood of errors.
 
 ### Conclusion
 
